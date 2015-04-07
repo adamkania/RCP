@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ASCII"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmi:id="_RrORwNsfEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.application">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_T_lhENsfEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.trimmedwindow.to-do" label="To-do" x="100" y="100" width="600" height="400">
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_8H8roNsgEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.perspective">
+      <children xsi:type="advanced:Perspective" xmi:id="_DjoaENshEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.perspective.to-do" label="To-Do">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_JIslINshEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.partsashcontainer.main">
+          <children xsi:type="basic:PartStack" xmi:id="_UCBfINshEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.partstack.0">
+            <children xsi:type="basic:Part" xmi:id="_L7dLMNsiEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.part.overview" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.parts.TodoOverviewPart" label="To-Dos"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_MK6TgNvSEeST1OSpV2Xs7g" elementId="com.example.e4.rcp.todo.partstack.3">
+            <children xsi:type="basic:Part" xmi:id="_MqmgMNvSEeST1OSpV2Xs7g" elementId="com.example.e4.rcp.todo.part.delete" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.parts.TodoDeletionPart" label="Delete"/>
+          </children>
+        </children>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_Y0tyENshEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.partsashcontainer.two">
+          <children xsi:type="basic:PartStack" xmi:id="_bqyAQNshEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.partstack.1">
+            <children xsi:type="basic:Part" xmi:id="_QGfBMNsiEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.part.tododetails" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.parts.TodoDetailsPart" label="Details"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_dmv9sNshEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.partstack.2">
+            <children xsi:type="basic:Part" xmi:id="_SRkYsNsiEeSJbsT2xZz5BQ" elementId="com.example.e4.rcp.todo.part.playground" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.parts.PlaygroundPart" label="Playground"/>
+          </children>
+        </children>
+      </children>
+    </children>
+  </children>
+  <addons xmi:id="_RrORwdsfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_RrORwtsfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_RrORw9sfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_RrORxNsfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_RrORxdsfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_RrORxtsfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+  <addons xmi:id="_RrORx9sfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+</application:Application>
