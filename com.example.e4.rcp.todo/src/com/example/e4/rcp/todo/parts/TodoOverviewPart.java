@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -30,6 +31,10 @@ public class TodoOverviewPart {
 
 	@Inject
 	private ITodoService todoService;
+	
+	@Inject
+	private EMenuService menuService;
+	
 	private Table table;
 
 	private TableViewer tableViewer;
@@ -69,7 +74,7 @@ public class TodoOverviewPart {
 			}
 		});
 
-		tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
+		tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION| SWT.MULTI);
 		table = tableViewer.getTable();
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_table.widthHint = 439;
@@ -115,6 +120,8 @@ public class TodoOverviewPart {
 						|| todo.getDescription().contains(searchString);
 			}
 		});
+		
+		menuService.registerContextMenu(tableViewer.getControl(), "com.example.e4.rcp.todo.popupmenu.table");
 	}
 
 	@Focus

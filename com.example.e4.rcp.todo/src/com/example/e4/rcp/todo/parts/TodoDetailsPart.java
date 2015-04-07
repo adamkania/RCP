@@ -6,7 +6,10 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -41,6 +44,14 @@ public class TodoDetailsPart {
 		textSummary = new Text(parent, SWT.BORDER);
 		textSummary.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
+		
+		final ControlDecoration deco = new ControlDecoration(textSummary, SWT.TOP | SWT.RIGHT);
+		
+		Image image = FieldDecorationRegistry.getDefault().getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
+		
+		deco.setDescriptionText("This is a tooltip text");
+		deco.setImage(image);
+		deco.setShowOnlyOnFocus(true);
 
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
