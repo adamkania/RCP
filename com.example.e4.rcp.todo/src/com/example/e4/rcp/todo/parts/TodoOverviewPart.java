@@ -9,9 +9,13 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.services.EMenuService;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -39,6 +43,9 @@ public class TodoOverviewPart {
 
 	@Inject
 	private EMenuService menuService;
+	
+	@Inject
+	private ESelectionService eSelectionService;
 
 	private Table table;
 
@@ -121,8 +128,19 @@ public class TodoOverviewPart {
 				BeanProperties.values(new String[] { Todo.FIELD_SUMMARY,
 						Todo.FIELD_DESCRIPTION }));
 		
+		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection sel = (IStructuredSelection) tableViewer.getSelection();
+				
+				eSelectionService.setSelection(sel.getFirstElement());
+				
+			}
+		});
+		
 	}
-	
+
 	public void updateViewer(List<Todo> list){
 		if(tableViewer != null){
 			writableList.clear();

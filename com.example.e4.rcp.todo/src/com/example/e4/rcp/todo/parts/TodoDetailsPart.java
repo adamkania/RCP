@@ -4,12 +4,20 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.ChangeEvent;
+import org.eclipse.core.databinding.observable.IChangeListener;
+import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.model.application.ui.MDirtyable;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
@@ -20,14 +28,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import com.example.e4.rcp.todo.model.IServiceConstants;
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
 
 public class TodoDetailsPart {
 	
@@ -40,7 +46,19 @@ public class TodoDetailsPart {
 	private Todo todo;
 
 	@Inject
-	private ITodoService todoService;
+	private MDirtyable dirty;
+	
+	private IChangeListener listener = new IChangeListener() {
+		
+		@Override
+		public void handleChange(ChangeEvent event) {
+			if(dirty != null){
+				dirty.setDirty(true);
+			}
+			
+		}
+	};
+	
 
 	@PostConstruct
 	public void createControls(Composite parent) {
@@ -124,6 +142,9 @@ public class TodoDetailsPart {
 		if (textSummary != null && !textSummary.isDisposed()) {
 			enableUserInterface(true);
 			
+			IObservableList providers = dataBindingContext.getValidationStatusProviders();
+			providers.forEach((b) -> ((Binding)b).getTarget().removeChangeListener(listener));
+			
 			dataBindingContext.dispose();
 			
 			IObservableValue target = WidgetProperties.text(SWT.Modify).observe(textSummary);
@@ -135,16 +156,28 @@ public class TodoDetailsPart {
 			model = BeanProperties.value(Todo.FIELD_DESCRIPTION).observe(todo);
 			
 			dataBindingContext.bindValue(target, model);
+
+			target = WidgetProperties.selection().observe(btnCheckDone);
+			model = BeanProperties.value(Todo.FIELD_DONE).observe(todo);
+			
+			dataBindingContext.bindValue(target, model);
 			
 			IObservableValue observeSelectionDateTime = WidgetProperties.selection().observe(dateTimeDueDate);
 			IObservableValue dueDateTodoObserveValue = BeanProperties.value(Todo.FIELD_DUEDATE).observe(todo);
 			
 			dataBindingContext.bindValue(observeSelectionDateTime, dueDateTodoObserveValue);
 			
-			textSummary.setText(todo.getSummary());
-			textDescription.setText(todo.getDescription());
-			dateTimeDueDate.setData(todo.getDueDate());
-			btnCheckDone.setSelection(todo.isDone());
+			providers = dataBindingContext.getValidationStatusProviders();
+			providers.forEach((b) -> ((Binding)b).getTarget().addChangeListener(listener));
+			
+		}
+	}
+	
+	@Persist
+	public void save(MDirtyable dirty, ITodoService todoService, Shell shell){
+		if( MessageDialog.openConfirm(shell, "Save", "Are you sure ?")){
+			todoService.saveTodo(todo);
+			dirty.setDirty(false);
 		}
 	}
 

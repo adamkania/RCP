@@ -111,7 +111,7 @@ public class Todo {
 		this.dueDate = dueDate;
 	}
 	
-	public void addPropertyChanggeListener(PropertyChangeListener l){
+	public void addPropertyChangeListener(PropertyChangeListener l){
 		changes.addPropertyChangeListener(l);
 	}
 	
