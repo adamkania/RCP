@@ -4,8 +4,12 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
@@ -22,7 +26,12 @@ import com.example.e4.rcp.todo.model.IServiceConstants;
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
+
 public class TodoDetailsPart {
+	
+	DataBindingContext dataBindingContext = new DataBindingContext();
 
 	private Text textSummary;
 	private Text textDescription;
@@ -114,6 +123,24 @@ public class TodoDetailsPart {
 		}
 		if (textSummary != null && !textSummary.isDisposed()) {
 			enableUserInterface(true);
+			
+			dataBindingContext.dispose();
+			
+			IObservableValue target = WidgetProperties.text(SWT.Modify).observe(textSummary);
+			IObservableValue model = BeanProperties.value(Todo.FIELD_SUMMARY).observe(todo);
+			
+			dataBindingContext.bindValue(target, model);
+			
+			target = WidgetProperties.text(SWT.Modify).observe(textDescription);
+			model = BeanProperties.value(Todo.FIELD_DESCRIPTION).observe(todo);
+			
+			dataBindingContext.bindValue(target, model);
+			
+			IObservableValue observeSelectionDateTime = WidgetProperties.selection().observe(dateTimeDueDate);
+			IObservableValue dueDateTodoObserveValue = BeanProperties.value(Todo.FIELD_DUEDATE).observe(todo);
+			
+			dataBindingContext.bindValue(observeSelectionDateTime, dueDateTodoObserveValue);
+			
 			textSummary.setText(todo.getSummary());
 			textDescription.setText(todo.getDescription());
 			dateTimeDueDate.setData(todo.getDueDate());

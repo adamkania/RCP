@@ -1,8 +1,24 @@
 package com.example.e4.rcp.todo.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Date;
 
 public class Todo {
+	
+	private long id;
+	private String summary = "";
+	private String description = "";
+	private boolean done = false;
+	private Date dueDate;
+	private PropertyChangeSupport changes = new PropertyChangeSupport(this);
+	
+	public static final String FIELD_ID = "id";
+	public static final String FIELD_SUMMARY = "summary";
+	public static final String FIELD_DESCRIPTION = "description";
+	public static final String FIELD_DONE = "done";
+	public static final String FIELD_DUEDATE = "dueDate";
+	
 
 	public Todo() {
 
@@ -55,12 +71,6 @@ public class Todo {
 		this.dueDate = dueDate;
 	}
 
-	private long id;
-	private String summary = "";
-	private String description = "";
-	private boolean done = false;
-	private Date dueDate;
-
 	public long getId() {
 		return id;
 	}
@@ -70,6 +80,7 @@ public class Todo {
 	}
 
 	public void setSummary(String summary) {
+		changes.firePropertyChange(FIELD_SUMMARY, this.summary, this.summary = summary);
 		this.summary = summary;
 	}
 
@@ -78,6 +89,7 @@ public class Todo {
 	}
 
 	public void setDescription(String description) {
+		changes.firePropertyChange(FIELD_DESCRIPTION, this.description, this.description = description);
 		this.description = description;
 	}
 
@@ -86,6 +98,7 @@ public class Todo {
 	}
 
 	public void setDone(boolean done) {
+		changes.firePropertyChange(FIELD_DONE, this.done, this.done = done);
 		this.done = done;
 	}
 
@@ -94,7 +107,16 @@ public class Todo {
 	}
 
 	public void setDueDate(Date dueDate) {
+		changes.firePropertyChange(FIELD_DUEDATE, this.dueDate, this.dueDate = dueDate);
 		this.dueDate = dueDate;
+	}
+	
+	public void addPropertyChanggeListener(PropertyChangeListener l){
+		changes.addPropertyChangeListener(l);
+	}
+	
+	public void removePropertyChangeListener(PropertyChangeListener l){
+		changes.removePropertyChangeListener(l);
 	}
 
 }

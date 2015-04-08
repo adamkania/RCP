@@ -1,10 +1,15 @@
 package com.example.e4.rcp.todo.parts;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.services.EMenuService;
+import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -31,16 +36,18 @@ public class TodoOverviewPart {
 
 	@Inject
 	private ITodoService todoService;
-	
+
 	@Inject
 	private EMenuService menuService;
-	
+
 	private Table table;
 
 	private TableViewer tableViewer;
 
 	protected String searchString = "";
 	private Text search;
+
+	private WritableList writableList;
 
 	@PostConstruct
 	private void postConstruct(Composite parent) {
@@ -50,7 +57,7 @@ public class TodoOverviewPart {
 		btnLoadData.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				tableViewer.setInput(todoService.getTodos());
+				updateViewer(todoService.getTodos());
 
 			}
 		});
@@ -74,7 +81,8 @@ public class TodoOverviewPart {
 			}
 		});
 
-		tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION| SWT.MULTI);
+		tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION
+				| SWT.MULTI);
 		table = tableViewer.getTable();
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_table.widthHint = 439;
@@ -82,33 +90,15 @@ public class TodoOverviewPart {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
-		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
-
 		TableViewerColumn colSummary = new TableViewerColumn(tableViewer,
 				SWT.NONE);
-		colSummary.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				Todo todo = (Todo) element;
-				return todo.getSummary();
-			}
-		});
 		colSummary.getColumn().setWidth(100);
 		colSummary.getColumn().setText("Summary");
 
 		TableViewerColumn colDescription = new TableViewerColumn(tableViewer,
 				SWT.NONE);
-		colDescription.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				Todo todo = (Todo) element;
-				return todo.getDescription();
-			}
-		});
 		colDescription.getColumn().setWidth(200);
 		colDescription.getColumn().setText("Description");
-
-		tableViewer.setInput(todoService.getTodos());
 
 		tableViewer.addFilter(new ViewerFilter() {
 
@@ -120,8 +110,24 @@ public class TodoOverviewPart {
 						|| todo.getDescription().contains(searchString);
 			}
 		});
+
+		menuService.registerContextMenu(tableViewer.getControl(),
+				"com.example.e4.rcp.todo.popupmenu.table");
+
+		writableList = new WritableList(todoService.getTodos(), Todo.class);
+		ViewerSupport.bind(
+				tableViewer,
+				writableList,
+				BeanProperties.values(new String[] { Todo.FIELD_SUMMARY,
+						Todo.FIELD_DESCRIPTION }));
 		
-		menuService.registerContextMenu(tableViewer.getControl(), "com.example.e4.rcp.todo.popupmenu.table");
+	}
+	
+	public void updateViewer(List<Todo> list){
+		if(tableViewer != null){
+			writableList.clear();
+			writableList.addAll(list);
+		}
 	}
 
 	@Focus
