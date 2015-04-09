@@ -3,6 +3,7 @@ package com.example.e4.rcp.todo.service.internal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
@@ -51,6 +52,11 @@ public class MyTodoServiceImpl implements ITodoService {
 
 	@Override
 	public List<Todo> getTodos() {
+		try{
+			TimeUnit.SECONDS.sleep(5);
+		} catch(InterruptedException iEx){
+			iEx.printStackTrace();
+		}
 		List<Todo> list = new ArrayList<Todo>();
 		for (Todo todo : todos) {
 			list.add(todo.copy());
