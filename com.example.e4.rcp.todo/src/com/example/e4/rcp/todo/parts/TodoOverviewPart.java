@@ -11,7 +11,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
+import com.example.e4.rcp.todo.events.MyEventContants;
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
@@ -164,6 +167,15 @@ public class TodoOverviewPart {
 			}
 		});
 		
+	}
+	
+	@Inject
+	@Optional
+	private void getNotified(@UIEventTopic(MyEventContants.TOPIC_TODO_ALLTOPICS) Todo topic){
+		if(tableViewer != null){
+			writableList.clear();
+			writableList.addAll(todoService.getTodos());
+		}
 	}
 
 	public void updateViewer(List<Todo> list){

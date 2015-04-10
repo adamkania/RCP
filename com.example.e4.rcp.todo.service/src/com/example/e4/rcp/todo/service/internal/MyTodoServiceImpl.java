@@ -5,10 +5,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
+import org.eclipse.e4.core.services.events.IEventBroker;
+
+import com.example.e4.rcp.todo.events.MyEventContants;
 import com.example.e4.rcp.todo.model.ITodoService;
 import com.example.e4.rcp.todo.model.Todo;
 
 public class MyTodoServiceImpl implements ITodoService {
+	
+	@Inject
+	private IEventBroker broker;
 
 	private static int current = 1;
 	private List<Todo> todos;
@@ -28,8 +36,10 @@ public class MyTodoServiceImpl implements ITodoService {
 
 	@Override
 	public synchronized boolean saveTodo(Todo newTodo) {
+		boolean created = false;
 		Todo updateTodo = findById(newTodo.getId());
 		if (updateTodo == null) {
+			created = true;
 			updateTodo = new Todo(current++);
 			todos.add(updateTodo);
 		}
@@ -37,6 +47,13 @@ public class MyTodoServiceImpl implements ITodoService {
 		updateTodo.setDescription(newTodo.getDescription());
 		updateTodo.setDone(newTodo.isDone());
 		updateTodo.setDueDate(newTodo.getDueDate());
+		
+		if(created){
+			broker.post(MyEventContants.TOPIC_TODO_UPDATE, updateTodo);
+		} 
+		else {
+			broker.post(MyEventContants.TOPIC_TODO_NEW, updateTodo);
+		}
 		return true;
 	}
 
@@ -52,11 +69,11 @@ public class MyTodoServiceImpl implements ITodoService {
 
 	@Override
 	public List<Todo> getTodos() {
-		try{
-			TimeUnit.SECONDS.sleep(5);
+		/*try{
+			TimeUnit.SECONDS.sleep(1);
 		} catch(InterruptedException iEx){
 			iEx.printStackTrace();
-		}
+		}*/
 		List<Todo> list = new ArrayList<Todo>();
 		for (Todo todo : todos) {
 			list.add(todo.copy());
