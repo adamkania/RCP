@@ -53,6 +53,7 @@
       <children xsi:type="menu:ToolBar" xmi:id="_XpuwoN0ZEeSkMoYazUrAUw" elementId="com.example.e4.rcp.todo.toolbar.0">
         <children xsi:type="menu:HandledToolItem" xmi:id="_dMo_kN0ZEeSkMoYazUrAUw" elementId="com.example.e4.rcp.todo.handledtoolitem.save" label="Save" command="_a_WTgN0XEeSkMoYazUrAUw"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_i7k8oN37EeSdgIcJFAd7zA" elementId="com.example.e4.rcp.todo.handledtoolitem.tooglePerspective" label="Toogle Perspective" command="_pY3wMN37EeSdgIcJFAd7zA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_X6lUQN-DEeSoEMp-dhlACQ" elementId="com.example.e4.rcp.todo.handledtoolitem.toggletheme" label="Toggle Theme" command="_dh9zgN-DEeSoEMp-dhlACQ"/>
       </children>
     </trimBars>
   </children>
@@ -65,6 +66,7 @@
   <handlers xmi:id="_wN010N37EeSdgIcJFAd7zA" elementId="com.example.e4.rcp.todo.handler.0" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handlers.PerspectiveSwitchHandler" command="_pY3wMN37EeSdgIcJFAd7zA"/>
   <handlers xmi:id="_oGoWIN4EEeSdgIcJFAd7zA" elementId="com.example.e4.rcp.todo.handler.dynamictest" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handlers.DynamicPartHandler" command="_ksOr0N4EEeSdgIcJFAd7zA"/>
   <handlers xmi:id="_h-av0N4GEeSdgIcJFAd7zA" elementId="com.example.e4.rcp.todo.handler.openeditor" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handlers.OpenEditorHandler" command="_e4hV4N4GEeSdgIcJFAd7zA"/>
+  <handlers xmi:id="_ndXssN-DEeSoEMp-dhlACQ" elementId="com.example.e4.rcp.todo.handler.toggletheme" contributionURI="bundleclass://com.example.e4.rcp.todo/com.example.e4.rcp.todo.handlers.ThemeSwitchHandler" command="_dh9zgN-DEeSoEMp-dhlACQ"/>
   <bindingTables xmi:id="_1RSUQN0tEeSkMoYazUrAUw" elementId="com.example.e4.rcp.todo.bindingtable.mybinding" bindingContext="_dBuY8N0tEeSkMoYazUrAUw">
     <bindings xmi:id="_ItLFMN0uEeSkMoYazUrAUw" elementId="com.example.e4.rcp.todo.keybinding.save" keySequence="M1+S" command="_a_WTgN0XEeSkMoYazUrAUw"/>
   </bindingTables>
@@ -82,6 +84,7 @@
   <commands xmi:id="_pY3wMN37EeSdgIcJFAd7zA" elementId="com.example.e4.rcp.todo.command.tooglePerspective" commandName="Toogle Perspective"/>
   <commands xmi:id="_ksOr0N4EEeSdgIcJFAd7zA" elementId="com.example.e4.rcp.todo.command.dynamictest" commandName="DynamicTest"/>
   <commands xmi:id="_e4hV4N4GEeSdgIcJFAd7zA" elementId="com.example.e4.rcp.todo.command.openeditor" commandName="Open Editor"/>
+  <commands xmi:id="_dh9zgN-DEeSoEMp-dhlACQ" elementId="com.example.e4.rcp.todo.command.toggletheme" commandName="Toggle Theme"/>
   <addons xmi:id="_RrORwdsfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_RrORwtsfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_RrORw9sfEeSJbsT2xZz5BQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
