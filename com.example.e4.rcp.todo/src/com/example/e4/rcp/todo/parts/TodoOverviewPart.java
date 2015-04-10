@@ -62,7 +62,7 @@ public class TodoOverviewPart {
 
 	private TableViewer tableViewer;
 
-	protected String searchString = "";
+	protected String searchString = Messages.TodoOverviewPart_0;
 	private Text search;
 
 	private WritableList writableList;
@@ -75,7 +75,7 @@ public class TodoOverviewPart {
 		btnLoadData.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Job job = new Job("loading"){
+				Job job = new Job(Messages.TodoOverviewPart_loading){
 
 					@Override
 					protected IStatus run(IProgressMonitor monitor) {
@@ -96,14 +96,14 @@ public class TodoOverviewPart {
 
 			}
 		});
-		btnLoadData.setText("Load Data");
+		btnLoadData.setText(Messages.TodoOverviewPart_load);
 		new Label(parent, SWT.NONE);
 
 		search = new Text(parent, SWT.BORDER | SWT.SEARCH | SWT.CANCEL
 				| SWT.ICON_SEARCH);
 		search.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2,
 				1));
-		search.setMessage("Filter");
+		search.setMessage(Messages.TodoOverviewPart_filter);
 
 		search.addModifyListener(new ModifyListener() {
 
@@ -128,12 +128,12 @@ public class TodoOverviewPart {
 		TableViewerColumn colSummary = new TableViewerColumn(tableViewer,
 				SWT.NONE);
 		colSummary.getColumn().setWidth(100);
-		colSummary.getColumn().setText("Summary");
+		colSummary.getColumn().setText(Messages.TodoOverviewPart_summary);
 
 		TableViewerColumn colDescription = new TableViewerColumn(tableViewer,
 				SWT.NONE);
 		colDescription.getColumn().setWidth(200);
-		colDescription.getColumn().setText("Description");
+		colDescription.getColumn().setText(Messages.TodoOverviewPart_description);
 
 		tableViewer.addFilter(new ViewerFilter() {
 
@@ -147,7 +147,7 @@ public class TodoOverviewPart {
 		});
 
 		menuService.registerContextMenu(tableViewer.getControl(),
-				"com.example.e4.rcp.todo.popupmenu.table");
+				"com.example.e4.rcp.todo.popupmenu.table"); //$NON-NLS-1$
 
 		writableList = new WritableList(todoService.getTodos(), Todo.class);
 		ViewerSupport.bind(

@@ -65,7 +65,7 @@ public class TodoDetailsPart {
 		parent.setLayout(new GridLayout(3, false));
 
 		Label lblSummary = new Label(parent, SWT.NONE);
-		lblSummary.setText("Summary");
+		lblSummary.setText(Messages.TodoDetailsPart_summary);
 		new Label(parent, SWT.NONE);
 
 		textSummary = new Text(parent, SWT.BORDER);
@@ -76,14 +76,14 @@ public class TodoDetailsPart {
 		
 		Image image = FieldDecorationRegistry.getDefault().getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage();
 		
-		deco.setDescriptionText("This is a tooltip text");
+		deco.setDescriptionText(Messages.TodoDetailsPart_tooltip);
 		deco.setImage(image);
 		deco.setShowOnlyOnFocus(true);
 
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 1, 4));
-		lblDescription.setText("Description");
+		lblDescription.setText(Messages.TodoDetailsPart_description);
 		new Label(parent, SWT.NONE);
 
 		textDescription = new Text(parent, SWT.BORDER);
@@ -97,7 +97,7 @@ public class TodoDetailsPart {
 		new Label(parent, SWT.NONE);
 
 		Label lblDueDate = new Label(parent, SWT.NONE);
-		lblDueDate.setText("Due Date");
+		lblDueDate.setText(Messages.TodoDetailsPart_dueDate);
 		new Label(parent, SWT.NONE);
 
 		dateTimeDueDate = new DateTime(parent, SWT.BORDER);
@@ -109,7 +109,7 @@ public class TodoDetailsPart {
 		new Label(parent, SWT.NONE);
 
 		btnCheckDone = new Button(parent, SWT.CHECK);
-		btnCheckDone.setText("Done");
+		btnCheckDone.setText(Messages.TodoDetailsPart_done);
 
 		updateUserInterface(todo);
 
@@ -175,7 +175,7 @@ public class TodoDetailsPart {
 	
 	@Persist
 	public void save(MDirtyable dirty, ITodoService todoService, Shell shell){
-		if( MessageDialog.openConfirm(shell, "Save", "Are you sure ?")){
+		if( MessageDialog.openConfirm(shell, Messages.TodoDetailsPart_save, Messages.TodoDetailsPart_question)){
 			todoService.saveTodo(todo);
 			dirty.setDirty(false);
 		}

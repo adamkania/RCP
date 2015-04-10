@@ -50,14 +50,14 @@ public class PlaygroundPart {
 					return;
 				}
 				try {
-					browser.setUrl("http://maps.google.com/maps?q="
-							+ URLEncoder.encode(city, "UTF-8"));
+					browser.setUrl("http://maps.google.com/maps?q=" //$NON-NLS-1$
+							+ URLEncoder.encode(city, "UTF-8")); //$NON-NLS-1$
 				} catch (UnsupportedEncodingException ueEx) {
 					ueEx.printStackTrace();
 				}
 			}
 		});
-		btnSearch.setText("Search");
+		btnSearch.setText(Messages.PlaygroundPart_search);
 
 	}
 
