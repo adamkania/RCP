@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 import com.example.e4.bundleresourceloader.IBundleResourceLoader;
+import com.example.e4.rcp.todo.i18n.Messages;
 
 public class PlaygroundPart {
 
